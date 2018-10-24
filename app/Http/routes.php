@@ -13,8 +13,8 @@
 
 //---------------------api------------------------
 
-Route::any('/getadphoto/{uid}','frontend\IndexController@getAdPhoto')->where(['uid' => '[0-9]+']);
-Route::any('/test','frontend\IndexController@test');
+Route::any('/stat/{uid}','frontend\IndexController@getJsCode')->where(['uid' => '[0-9]+']);
+Route::any('/deal','frontend\IndexController@deal');
 
 
 
