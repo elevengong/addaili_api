@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>鼎丰国际</title>
+    <script>
+        function window_init() {
+            var flag = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
+            if (!flag) {
+                window.location.href = 'pc/index.blade.php';
+            }else{
+                window.location.href = 'mobile/index.blade.php';
+            }
+        }
+     
+        window_init();
+        window.addEventListener('resize', function () {
+            window_init();
+        }, false)
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
