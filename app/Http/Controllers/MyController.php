@@ -60,29 +60,6 @@ class MyController extends Controller
     }
 
 
-    //上传图片
-    public function uploadphoto(Request $request,$id){
-        $file = $request->file($id);//获取图片
-        $allowed_extensions = ["png", "jpg", "gif"];
-        if ($file->getClientOriginalExtension() && !in_array(strtolower($file->getClientOriginalExtension()), $allowed_extensions)) {
-            return Response()->json([
-                'status' => 0,
-                'msg' => '只能上传 png | jpg | gif格式的图片'
-            ]);
-        }
-        $destinationPath = 'public/uploads/';
-        $extension = $file->getClientOriginalExtension();
-        $fileName = time().str_random(5).'.'.$extension;
-        $file->move($destinationPath, $fileName);
-        return Response()->json(
-            [
-                'status' => 1,
-                //'pic' => asset($destinationPath.$fileName),
-                'pic' => "/".$destinationPath.$fileName,
-                'msg' => '上传成功！'
-            ]
-        );
-    }
 
 
 }

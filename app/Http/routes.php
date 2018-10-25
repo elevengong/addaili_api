@@ -13,7 +13,7 @@
 
 //---------------------api------------------------
 
-Route::any('/stat/{uid}','frontend\IndexController@getJsCode')->where(['uid' => '[0-9]+']);
+Route::any('/stat/{uid}/{type}','frontend\IndexController@getJsCode')->where(['uid' => '[0-9]+'])->where(['type' => '[0-9]+']);
 Route::any('/deal','frontend\IndexController@deal');
 
 Route::any('/','frontend\IndexController@index');
