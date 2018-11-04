@@ -1,22 +1,22 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50626
+Source Server         : localmysql
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : daili
 
 Target Server Type    : MYSQL
-Target Server Version : 50626
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-25 00:01:43
+Date: 2018-11-04 14:34:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for admin
+-- Table structure for `admin`
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
@@ -34,12 +34,44 @@ CREATE TABLE `admin` (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1', 'admin', 'eyJpdiI6Ink0S0tEemtWN2RzTDhpXC9cLzNlRk5Idz09IiwidmFsdWUiOiJnU1RsK1BpMmtKemlXc2VsUzAyb2xBPT0iLCJtYWMiOiJjMTFiM2RjOTNmYmU3ZjQ4OWM5M2ZhZDgxOTVlNzkyOTNmMmRkNjk5MjMwNzU2NDE0YmRiZDRkYjNhYWI2ZjZlIn0=', '1', '127.0.0.1', '2018-07-09 13:41:55', '2018-09-16 00:17:52', '2018-09-16 12:17:52');
+INSERT INTO `admin` VALUES ('1', 'admin', 'eyJpdiI6Ink0S0tEemtWN2RzTDhpXC9cLzNlRk5Idz09IiwidmFsdWUiOiJnU1RsK1BpMmtKemlXc2VsUzAyb2xBPT0iLCJtYWMiOiJjMTFiM2RjOTNmYmU3ZjQ4OWM5M2ZhZDgxOTVlNzkyOTNmMmRkNjk5MjMwNzU2NDE0YmRiZDRkYjNhYWI2ZjZlIn0=', '1', '127.0.0.1', '2018-07-09 13:41:55', '2018-11-04 12:57:23', '2018-11-04 12:57:23');
 INSERT INTO `admin` VALUES ('2', 'admin11', 'eyJpdiI6IlZBY1wvRXdlM3l3QVp2c0RnK1FqbUZBPT0iLCJ2YWx1ZSI6ImxuRmpMWEtcL0pyajVGK1dxZmRLcDlnPT0iLCJtYWMiOiI2MzViNTJhZjc3ZDQzOTAwNjE5ZTgzMzU4MDM0NjdiYzE0Y2RmMWM3YjUyY2I3MGU3Njc4NGY0M2JmM2EyZjZkIn0=', '0', '127.0.0.1', '2018-07-09 13:41:55', '2018-08-18 18:32:24', '2018-08-31 16:00:49');
 INSERT INTO `admin` VALUES ('3', 'admin2', 'eyJpdiI6IlZBY1wvRXdlM3l3QVp2c0RnK1FqbUZBPT0iLCJ2YWx1ZSI6ImxuRmpMWEtcL0pyajVGK1dxZmRLcDlnPT0iLCJtYWMiOiI2MzViNTJhZjc3ZDQzOTAwNjE5ZTgzMzU4MDM0NjdiYzE0Y2RmMWM3YjUyY2I3MGU3Njc4NGY0M2JmM2EyZjZkIn0=', '1', '127.0.0.1', '2018-07-09 13:41:55', '2018-08-18 18:29:04', '2018-08-18 18:29:04');
 
 -- ----------------------------
--- Table structure for ads_count_type
+-- Table structure for `ads`
+-- ----------------------------
+DROP TABLE IF EXISTS `ads`;
+CREATE TABLE `ads` (
+  `ads_id` int(8) NOT NULL AUTO_INCREMENT,
+  `member_id` int(8) NOT NULL,
+  `member_name` varchar(50) NOT NULL,
+  `ads_name` varchar(50) NOT NULL,
+  `ads_link` varchar(100) NOT NULL,
+  `ismobile` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:pc端 1:手机端',
+  `ads_count_type` tinyint(1) NOT NULL,
+  `ads_type` tinyint(1) NOT NULL,
+  `ads_time_period` varchar(255) DEFAULT NULL COMMENT '空为24小时全部展示',
+  `ads_photo` varchar(100) NOT NULL,
+  `ads_balance` decimal(16,2) NOT NULL DEFAULT '0.00',
+  `ads_per_cost` decimal(5,2) NOT NULL DEFAULT '0.01',
+  `ads_amount_cost` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '总花费',
+  `show_times` int(9) NOT NULL DEFAULT '0',
+  `click_times` int(9) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:审核中 1：通过审核 2:站长自己暂停 3:admin关闭',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ads_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ads
+-- ----------------------------
+INSERT INTO `ads` VALUES ('1', '1', 'adsmember', '竖幅广告', 'http://www.googel.com', '0', '1', '1', null, 'http://addaili.com/resources/views/frontend/pc/ads/ad-01.gif', '499.88', '0.03', '0.12', '2', '0', '1', '2018-11-04 14:09:12', '2018-11-04 06:02:22');
+INSERT INTO `ads` VALUES ('2', '1', 'adsmember', '横幅广告', 'http://www.baidu.com', '0', '2', '1', null, 'http://addaili.com/resources/views/frontend/pc/ads/1231.png', '800.00', '0.01', '0.00', '0', '0', '1', '2018-11-04 13:06:24', '2018-10-25 15:27:53');
+
+-- ----------------------------
+-- Table structure for `ads_count_type`
 -- ----------------------------
 DROP TABLE IF EXISTS `ads_count_type`;
 CREATE TABLE `ads_count_type` (
@@ -47,17 +79,18 @@ CREATE TABLE `ads_count_type` (
   `ads_count_name` varchar(50) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`ads_count_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ads_count_type
 -- ----------------------------
-INSERT INTO `ads_count_type` VALUES ('1', 'PV计费', '1');
-INSERT INTO `ads_count_type` VALUES ('2', 'IP计费', '1');
-INSERT INTO `ads_count_type` VALUES ('3', '点击计费', '1');
+INSERT INTO `ads_count_type` VALUES ('1', 'CPC', '1');
+INSERT INTO `ads_count_type` VALUES ('2', 'CPM', '1');
+INSERT INTO `ads_count_type` VALUES ('3', '点击计费', '0');
+INSERT INTO `ads_count_type` VALUES ('4', '提成计费', '0');
 
 -- ----------------------------
--- Table structure for ads_type
+-- Table structure for `ads_type`
 -- ----------------------------
 DROP TABLE IF EXISTS `ads_type`;
 CREATE TABLE `ads_type` (
@@ -65,17 +98,17 @@ CREATE TABLE `ads_type` (
   `ads_type` varchar(30) DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`ads_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ads_type
 -- ----------------------------
-INSERT INTO `ads_type` VALUES ('1', '博彩广告', '1');
-INSERT INTO `ads_type` VALUES ('2', '色情广告', '1');
-INSERT INTO `ads_type` VALUES ('3', '普通广告', '1');
+INSERT INTO `ads_type` VALUES ('1', '横幅', '1');
+INSERT INTO `ads_type` VALUES ('2', '竖幅', '1');
+INSERT INTO `ads_type` VALUES ('3', '手机弹出广告', '1');
 
 -- ----------------------------
--- Table structure for deposit
+-- Table structure for `deposit`
 -- ----------------------------
 DROP TABLE IF EXISTS `deposit`;
 CREATE TABLE `deposit` (
@@ -100,7 +133,7 @@ CREATE TABLE `deposit` (
 INSERT INTO `deposit` VALUES ('1', '1', '1613216511', '130.00', '1', '1', '1', '159628456132', '赵子龙', '127.0.0.1', '2018-09-14 16:54:57', '2018-09-14 16:54:57');
 
 -- ----------------------------
--- Table structure for member
+-- Table structure for `member`
 -- ----------------------------
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
@@ -127,7 +160,7 @@ INSERT INTO `member` VALUES ('1', 'adsmember', 'eyJpdiI6Ijd2WVpuOUN4YkNzQ3hQbEpB
 INSERT INTO `member` VALUES ('2', 'sitemember', '12312321', '2', '666666', '1000.00', '0.00', '0.12', '1', '127.0.0.1', '2018-09-14 19:12:26', '2018-09-13 18:12:40', '2018-09-14 19:12:26');
 
 -- ----------------------------
--- Table structure for paytype
+-- Table structure for `paytype`
 -- ----------------------------
 DROP TABLE IF EXISTS `paytype`;
 CREATE TABLE `paytype` (
@@ -145,7 +178,7 @@ INSERT INTO `paytype` VALUES ('2', '微信', '1');
 INSERT INTO `paytype` VALUES ('3', '银行转帐', '1');
 
 -- ----------------------------
--- Table structure for staticset
+-- Table structure for `staticset`
 -- ----------------------------
 DROP TABLE IF EXISTS `staticset`;
 CREATE TABLE `staticset` (
@@ -165,10 +198,54 @@ CREATE TABLE `staticset` (
 INSERT INTO `staticset` VALUES ('1', 'CommissionRate', '佣金比例', '10%', '1', '2018-09-13 13:46:06', '2018-09-13 13:46:06');
 INSERT INTO `staticset` VALUES ('2', 'DeductionRate', '全站扣量比例(站长单独设置这个不work)', '15%', '1', '2018-09-13 14:29:23', '2018-09-13 14:29:23');
 INSERT INTO `staticset` VALUES ('3', 'MinDeposit', '广告商最少存款', '100', '1', '2018-09-14 14:26:15', '2018-09-14 14:26:15');
-INSERT INTO `staticset` VALUES ('4', 'MinWithdraw', '站长最小提款数', '100', '1', '2018-09-14 14:26:58', '2018-09-14 14:26:58');
+INSERT INTO `staticset` VALUES ('4', 'MinWithdraw', '站长最小提款数', '100', '1', '2018-10-24 12:47:20', '2018-10-24 12:47:20');
 
 -- ----------------------------
--- Table structure for websites
+-- Table structure for `statistics`
+-- ----------------------------
+DROP TABLE IF EXISTS `statistics`;
+CREATE TABLE `statistics` (
+  `statistics_id` bigint(9) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(30) NOT NULL,
+  `webmaster_id` int(8) NOT NULL,
+  `web_id` int(8) NOT NULL,
+  `web_domain` varchar(100) NOT NULL,
+  `come_url` varchar(100) NOT NULL COMMENT '来路',
+  `adsmember_id` int(8) NOT NULL,
+  `ads_id` int(8) NOT NULL,
+  `click_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:浏览 1:点击',
+  `region` varchar(30) DEFAULT NULL,
+  `region_id` int(8) DEFAULT NULL,
+  `city` varchar(30) DEFAULT NULL,
+  `city_id` int(8) DEFAULT NULL,
+  `visit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ismobile` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:pc 1:手机',
+  `vistor_system` varchar(50) DEFAULT NULL,
+  `vistor_exploer` varchar(50) DEFAULT NULL,
+  `earn_money` tinyint(1) NOT NULL DEFAULT '0' COMMENT '扣量变量，0:不扣量 1:表示这个要扣一来',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`statistics_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of statistics
+-- ----------------------------
+INSERT INTO `statistics` VALUES ('3', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 05:40:53', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 05:40:53', '2018-11-04 05:40:53');
+INSERT INTO `statistics` VALUES ('4', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 05:48:16', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 05:48:16', '2018-11-04 05:48:16');
+INSERT INTO `statistics` VALUES ('5', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 05:50:33', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 05:50:33', '2018-11-04 05:50:33');
+INSERT INTO `statistics` VALUES ('6', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 05:51:01', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 05:51:01', '2018-11-04 05:51:01');
+INSERT INTO `statistics` VALUES ('7', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 05:53:46', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 05:53:46', '2018-11-04 05:53:46');
+INSERT INTO `statistics` VALUES ('8', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 06:01:02', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 06:01:02', '2018-11-04 06:01:02');
+INSERT INTO `statistics` VALUES ('9', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 06:02:22', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 06:02:22', '2018-11-04 06:02:22');
+INSERT INTO `statistics` VALUES ('10', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 06:06:38', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 06:06:38', '2018-11-04 06:06:38');
+INSERT INTO `statistics` VALUES ('11', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 06:07:31', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 06:07:31', '2018-11-04 06:07:31');
+INSERT INTO `statistics` VALUES ('12', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 06:07:37', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 06:07:37', '2018-11-04 06:07:37');
+INSERT INTO `statistics` VALUES ('13', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 06:08:33', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 06:08:33', '2018-11-04 06:08:33');
+INSERT INTO `statistics` VALUES ('14', '127.0.0.1', '2', '1', 'ck.com', 'http://ck.com/ads/', '1', '1', '0', '', '0', '', '0', '2018-11-04 06:09:12', '0', 'Windows 10', 'Chrome(69.0.3497.100)', '1', '2018-11-04 06:09:12', '2018-11-04 06:09:12');
+
+-- ----------------------------
+-- Table structure for `websites`
 -- ----------------------------
 DROP TABLE IF EXISTS `websites`;
 CREATE TABLE `websites` (
@@ -179,7 +256,7 @@ CREATE TABLE `websites` (
   `webtype` tinyint(1) DEFAULT '1' COMMENT '0:视频站 1:普通站',
   `allow_ads_type` varchar(50) DEFAULT NULL,
   `allow_ads_count` varchar(50) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '1' COMMENT '0:站长自己关闭 1:激活 2:admin关闭,站长不能开启',
+  `status` tinyint(1) DEFAULT '1' COMMENT '0:审核中 1:通过审核 2:admin禁止,站长不能开启 3:站长自己禁止的',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`web_id`)
@@ -188,10 +265,10 @@ CREATE TABLE `websites` (
 -- ----------------------------
 -- Records of websites
 -- ----------------------------
-INSERT INTO `websites` VALUES ('1', '2', '百度', 'http://www.baidu.com', '0', '1,2,', '1,3,', '0', '2018-09-16 00:43:44', '2018-09-16 00:43:47');
+INSERT INTO `websites` VALUES ('1', '2', '百度', 'http://www.ck.com', '0', '1,2,', '1,3,', '1', '2018-09-16 00:43:44', '2018-10-25 12:38:21');
 
 -- ----------------------------
--- Table structure for withdraw
+-- Table structure for `withdraw`
 -- ----------------------------
 DROP TABLE IF EXISTS `withdraw`;
 CREATE TABLE `withdraw` (
