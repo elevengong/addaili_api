@@ -14,7 +14,7 @@
 //---------------------api------------------------
 
 Route::any('/stat/{uid}/{type}','frontend\IndexController@getJsCode')->where(['uid' => '[0-9]+'])->where(['type' => '[0-9]+']);
-Route::any('/deal','frontend\IndexController@deal');
+Route::get('/stat/click/(ads_id)','frontend\IndexController@click')->where(['ads_id' => '[0-9]+']);
 
 Route::any('/','frontend\IndexController@index');
 

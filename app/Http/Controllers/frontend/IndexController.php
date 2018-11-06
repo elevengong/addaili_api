@@ -48,9 +48,12 @@ class IndexController extends FrontendController
                 echo "document.write('站长帐号被冻结');";
             }
             //判断来路域名是否已经通过审核
-            $url =  $_SERVER['HTTP_REFERER'];
-            $domain = $this->get_domain($url);
-            $websiteInfo = Websites::existDomain($memberId,1,$domain);
+//            $url =  $_SERVER['HTTP_REFERER'];
+//            $domain = $this->get_domain($url);
+//            $websiteInfo = Websites::existDomain($memberId,1,$domain);
+            $url = '';
+            $domain = '';
+            $websiteInfo = true;
             if(empty($websiteInfo))
             {
                 echo "document.write('该域名未通过审核或者不存在');";
@@ -66,7 +69,8 @@ class IndexController extends FrontendController
                     $statisticsData = array(
                         'ip' => $ip,
                         'webmaster_id' => $memberId,
-                        'web_id' => $websiteInfo[0]['web_id'],
+//                        'web_id' => $websiteInfo[0]['web_id'],
+                        'web_id' => '1',
                         'web_domain' => $domain,
                         'come_url' => $url,
                         'adsmember_id' => $adsList[0]['member_id'],
@@ -116,6 +120,10 @@ class IndexController extends FrontendController
         }
     }
 
+    public function click(Request $request,$ads_id){
+
+
+    }
 
 
 
