@@ -103,26 +103,94 @@ class IndexController extends FrontendController
                         'show_times'  => DB::raw('show_times + 1 '),
                     ));
 
+                    $ads_id = $adsList[0]['ads_id'];
+
                     //展示广告
-                    $adShow =  "document.write(\"<div id=AdLayer1><a href='".$adsList[0]['ads_link']."' target='_blank'><img src='".$adsList[0]['ads_photo']."' border='0'></a></div>\");";
+                    $adShow =  "document.write(\"<div id=AdLayer1><a href='http://www.dailiapi.com/stat/click/$memberId/$ads_id'. target='_blank'><img src='".$adsList[0]['ads_photo']."' border='0'></a></div>\");";
                     echo $adShow;
-
-
 
                 }
 
-
-
             }
-
-
 
         }
     }
 
-    public function click(Request $request,$ads_id){
+    public function click(Request $request,$memberId,$ads_id){
+        $memberInfo = Member::getMemberByMemberId($memberId,2);
+        if(empty($memberInfo))
+        {
+            echo "站长不存在";exit;
+        }else{
+            if(!isset($_SERVER['HTTP_REFERER']))
+            {
+                echo "没有来路地址";exit;
+            }else{
+                $url =  $_SERVER['HTTP_REFERER'];
+                $domain = $this->get_domain($url);
+                $websiteInfo = Websites::existDomain($memberId,1,$domain);
+                if(empty($websiteInfo))
+                {
+                    echo "该来路域名未通过审核或者不存在";exit;
+                }else{
+                    $adsInfo = Ads::where('status',1)->where('ads_id',$ads_id)->get()->toArray();
+                    if(empty($adsInfo)) {
+                        echo "广告商不存在";exit;
+                    }else{
+                        //入库
+                        $ip = $request->getClientIp();
+                        $statisticsData = array(
+                            'ip' => $ip,
+                            'webmaster_id' => $memberId,
+                            'web_id' => $websiteInfo[0]['web_id'],
+                            'web_domain' => $domain,
+                            'come_url' => $url,
+                            'adsmember_id' => $adsInfo[0]['member_id'],
+                            'ads_id' => $ads_id,
+                            'click_status' => '1',
+                            'region' => '',
+                            'region_id' => '',
+                            'city' => '',
+                            'city_id' => '',
+                            'visit_time' => date('Y-m-d h:i:s',time()),
+                            'ismobile' => '',
+                            'vistor_system' => '',
+                            'vistor_exploer' => '',
+                            'earn_money' => '0'
+                        );
+                        $isMobile = $this->isMobile();
+                        if ($isMobile) {
+                            $statisticsData['ismobile'] = 1;
+                        } else {
+                            $statisticsData['ismobile'] = 0;
+                        }
+                        if(isset($_SERVER['HTTP_USER_AGENT'])){
+                            $sys = $_SERVER['HTTP_USER_AGENT'];
+                            $statisticsData['vistor_system'] = $this->get_os($sys);
+                            $statisticsData['vistor_exploer'] = $this->get_broswer($sys);
+                        }
+                        //扣减该广告的余额
+                        DB::table('ads')->where('ads_id', $ads_id)->update(array(
+                            'ads_amount_cost' => DB::raw('ads_amount_cost + '.$adsInfo[0]['ads_per_cost']),
+                            'ads_balance'  => DB::raw('ads_balance - '.$adsInfo[0]['ads_per_cost']),
+                            'show_times'  => DB::raw('show_times + 1 '),
+                        ));
+                        Statistics::create($statisticsData);
+                        return redirect($adsInfo[0]['ads_link']);
+
+                    }
+
+                }
+
+            }
+
+        }
 
 
+
+
+
+        //return redirect('http://www.baidu.com');
     }
 
 
